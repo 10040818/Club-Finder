@@ -1,5 +1,4 @@
-const clubs = [
-    {
+const clubs = [{
         name: "Arsenal",
         stadium: "Emirates Stadium",
         fanArt: "https://www.thesportsdb.com/images/media/team/fanart/xyusxr1419347566.jpg",
@@ -43,3 +42,5 @@ const clubs = [
 
     }
 ];
+
+export default clubs;
