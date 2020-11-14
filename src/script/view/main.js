@@ -1,24 +1,26 @@
+import '../component/search-bar.js';
+import DataSource from '../data/data-source.js';
+
 const main = () => {
-    const searchElement = document.querySelector("#searchElement");
-    const buttonSearchElement = document.querySelector("#searchButtonElement");
+    const searchElement = document.querySelector("search-bar");
     const clubListElement = document.querySelector("#clubList");
 
-    const onButtonSearchClicked = () => {
-        const dataSource = new DataSource(renderResult, fallbackResult);
-        dataSource.searchClub(searchElement.value);
+
+
+    const onButtonSearchClicked = async() => {
+        try {
+            const result = await DataSource.searchClub(searchElement.value);
+            renderResult(result);
+        } catch (message) {
+            fallbackResult(message)
+        }
     };
 
-    const renderResult = function (results) {
+    const renderResult = (results) => {
         clubListElement.innerHTML = "";
-        results.forEach(function (club) {
+        results.forEach(function(club) {
 
-            const {name, fanArt, description} = club;
-
-
-            // function expression
-            // const sayHello = greet => console.log(`${greet}!`);
-            // const sayName = name => console.log(`Nama saya ${name}`);
-
+            const { name, fanArt, description } = club;
             const clubElement = document.createElement("div");
             clubElement.setAttribute("class", "club");
 
@@ -31,10 +33,12 @@ const main = () => {
         })
     };
 
-    const fallbackResult = function (message) {
+    const fallbackResult = (message) => {
         clubListElement.innerHTML = "";
         clubListElement.innerHTML += `<h2 class="placeholder">${message}</h2>`
     };
 
-    buttonSearchElement.addEventListener("click", onButtonSearchClicked);
+    searchElement.clickEvent = onButtonSearchClicked;
 };
+
+export default main;
